@@ -11,7 +11,6 @@
 ![](intro.gif)
 
 
-*Lua YModem代码库编写中，尚未完工*
 
 ## YModem 简明协议示意图
 
