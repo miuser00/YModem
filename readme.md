@@ -1,22 +1,14 @@
-# 使用 C# 语言编写的 YModem 通用读写程序
+# Generic Read/Write Program for YModem Written in "C#"
 
-## 功能：
-
-1. 与Secure CRT 1K 收发模式完全兼容
-2. 支持1k发送方式
-3. 支持128字节、1K字节接收
-4. 支持多文件读写
-5. MIT方式全开源
+## Features: 
+1. Fully compatible with Secure CRT 1K send/receive mode. 
+2. Supports 1k sending method. 
+3. Supports receiving in 128-byte and 1K-byte blocks. 
+4. Supports reading and writing multiple files.
+5. Fully open-source under the MIT license. 
 
 ![](intro.gif)
 
 
-
-## YModem 简明协议示意图
-
-![](YModem.png)
-
-## 附件：
-
-YMODEM协议参考中文译制版
-XMODEM-YMODEM-Protocol-Refrence_881014
+Attachments: YMODEM协议参考中文译制版
+XMODEM-YMODEM-Protocol-Reference_881014
