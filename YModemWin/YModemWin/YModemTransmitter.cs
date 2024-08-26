@@ -28,17 +28,19 @@ namespace YModemWin
         int packagesent;
         int totalpackage;
         long status;
-        double usedSeconds;
         bool isTramsitting;
         bool userCancel = false;
+        public DateTime dt=new DateTime(0);
 
         //完成包号，总包号，文件名
         Action<long, long,long,long,long,string> RefreshSendUI=null;
 
         public YModemTransmitter(SerialPort sp,bool timeout, Action<long, long, long, long, long,string> action)
         {
+            status = 0;
             serialPort = sp;
             RefreshSendUI = action;
+            dt = new DateTime(0);
             if (timeout)
             {
                 serialPort.ReadTimeout = 3000;
@@ -71,8 +73,6 @@ namespace YModemWin
 
             Crc16Ccitt crc16Ccitt = new Crc16Ccitt(InitialCrcValue.Zeros);
             int packetNumber = 0;
-            DateTime dt = DateTime.Now;
-
             Thread.Sleep(1);
 
             try
@@ -89,7 +89,8 @@ namespace YModemWin
                     if (ret == C) break;
                     Thread.Sleep(30);
                 }
-
+                serialPort.DiscardInBuffer();
+                if (dt.Ticks == 0) dt = DateTime.Now;
                 sendYmodemInitialPacket(STX, packetNumber, invertedPacketNumber, data, DataSize, Path, fileStream, CRC, CrcSize);
                 byte read =(byte) serialPort.ReadByte();
                 if (read != ACK)
@@ -156,11 +157,18 @@ namespace YModemWin
                         packagesent--;
                         packetNumber--;
                     }
+                    else if (signal == CAN)
+                    {
+                        status = -1;
+                        RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packetNumber, totalpackage, status, "发送任务被接收端取消了。");
+                        Console.WriteLine("无法发送数据包。");
+                        return false;
+                    }
                     else
                     {
-                        RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packetNumber, totalpackage, status, "服务端未响应发送的数据包。");
-                        Console.WriteLine("无法发送数据包。");
                         status = -1;
+                        RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packetNumber, totalpackage, status, "接收端未响应发送的数据包。");
+                        Console.WriteLine("无法发送数据包。");
                         return false;
                     }
                     if (userCancel)
@@ -173,6 +181,10 @@ namespace YModemWin
                         serialPort.Write(new byte[] { CAN }, 0, 1);
                         serialPort.Write(new byte[] { CAN }, 0, 1);
                         serialPort.Write(new byte[] { CAN }, 0, 1);
+                        status = -2;
+                        RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packetNumber, totalpackage, status, "用户取消发送。");
+
+                        return false;
                     }
                 } while (DataSize == packageReadCount && isTramsitting);
 
@@ -183,7 +195,7 @@ namespace YModemWin
                 int act = serialPort.ReadByte();
                 if ((act != ACK) && (act != NAK))
                 {
-                    RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packetNumber, totalpackage, status, "客户端未正确响应结束请求。");
+                    RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packetNumber, totalpackage, status, "接收端未正确响应结束请求。");
                     Console.WriteLine("无法完成传输。");
                     status = -1;
                     return false;
@@ -196,7 +208,7 @@ namespace YModemWin
                 /* 获取ACK（接收方确认EOT） */
                 if (serialPort.ReadByte() != ACK)
                 {
-                    RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packetNumber, totalpackage, status, "客户端未正确响应结束请求。");
+                    RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packetNumber, totalpackage, status, "接收端未正确响应结束请求。");
                     Console.WriteLine("无法完成传输。");
                     status = -1;
                     return false;
@@ -207,7 +219,7 @@ namespace YModemWin
                     /* 获取ACK（接收方确认C信号） */
                     if (serialPort.ReadByte() != C)
                     {
-                        RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packetNumber, totalpackage, status, "客户端未正确响应结束请求。");
+                        RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packetNumber, totalpackage, status, "接收端未正确响应结束请求。");
                         Console.WriteLine("无法完成传输。");
                         status = -1;
                         return false;
@@ -230,20 +242,19 @@ namespace YModemWin
                     if (serialPort.ReadByte() != ACK)
                     {
                         Console.WriteLine("无法完成传输。");
-                        RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packetNumber, totalpackage, status, "客户端未正确响应结束请求。");
+                        RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packetNumber, totalpackage, status, "接收端未正确响应结束请求。");
                         status = -1;
                         return false;
                     }
                     Console.WriteLine("文件传输成功");
                     TimeSpan span = DateTime.Now - dt;
-                    usedSeconds = span.TotalSeconds;
                     status = 1;
                     RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packagesent, totalpackage, status, "发送成功，耗时:" + span.TotalSeconds.ToString() + "秒");
                     //MessageBox.Show("发送耗时:" + span.TotalMilliseconds.ToString() + "毫秒", "发送成功", MessageBoxButtons.OK, MessageBoxIcon.None);
                 }
             }
 
-            catch (Exception ee)
+            catch 
             {
                 //接收方超时
                 Console.WriteLine("接收方超时");
@@ -255,7 +266,7 @@ namespace YModemWin
             {
                 if (status == -1)
                 {
-                    RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packetNumber, totalpackage, status, "发送失败");
+                    //RefreshSendUI?.Invoke(fileStream.Position, fileStream.Length, packetNumber, totalpackage, status, "发送失败");
                 }
                 fileStream.Close();
             }
@@ -267,6 +278,7 @@ namespace YModemWin
         {
             userCancel = true;
             isTramsitting = false;
+
         }
         /// <summary>
         /// 发送多个文件

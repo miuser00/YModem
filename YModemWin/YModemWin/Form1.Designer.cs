@@ -225,7 +225,7 @@
             this.btn_Send.TabIndex = 10;
             this.btn_Send.Text = "发送";
             this.btn_Send.UseVisualStyleBackColor = true;
-            this.btn_Send.Click += new System.EventHandler(this.btn_download_Click);
+            this.btn_Send.Click += new System.EventHandler(this.btn_send_Click);
             // 
             // label6
             // 
@@ -625,7 +625,7 @@
             this.MinimumSize = new System.Drawing.Size(527, 454);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "YModem Transceiver V0.31";
+            this.Text = "YModem Transceiver V0.34";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);

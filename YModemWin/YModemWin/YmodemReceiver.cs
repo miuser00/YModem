@@ -64,8 +64,9 @@ namespace YModemWin
             status = 0;
             expectedPackageNo = 0;
             isTransmissionComplete = false;
+            serialPort.DiscardInBuffer();
             //serialPort.Open(); // 打开串口
-            dt = DateTime.Now;
+            dt = new DateTime(0);
             try
             {
                 SendChar(C); // 发送 'C' 字符，通知发送端准备接收
@@ -79,18 +80,18 @@ namespace YModemWin
                     {
                         byte packetType = packetBuffer[0];
 
-
                         if (packetType == SOH || packetType == STX)
                         {
+                            if (dt.Ticks==0) dt = DateTime.Now;
                             if (expectedPackageNo == 0)
                             {
                                 byte rsvPackageNo = packetBuffer[1];
                                 if (rsvPackageNo == 0)
                                 {
-                                    //判断是否为传输结束
+                                    //判断是否所有文件传输传输结束
                                     if (packetBuffer[3] == 0)
                                     {
-
+                                        //发送所有文件传输传输结束的结束包
                                         HandleFilesAllCompeted();
                                         isTransmissionComplete = true;
                                     }
@@ -104,7 +105,7 @@ namespace YModemWin
                                     Console.WriteLine("包序号错误");
                                     status = -1;
                                     isTransmissionComplete = true;
-                                    RefreshReceiveUI?.Invoke(ReceivedLength, fileLength, expectedPackageNo, totalPackage, status, "接收错误", saveFileName, saveFileDate.ToShortDateString());
+                                    RefreshReceiveUI?.Invoke(ReceivedLength, fileLength, expectedPackageNo, totalPackage, status, "包序号错误", saveFileName, saveFileDate.ToShortDateString());
                                 }
                             }
                             else
@@ -117,12 +118,19 @@ namespace YModemWin
                         {
                             HandleEndOfTransmission();
                             continue;
+                        }else if (packetType ==CAN)
+                        {
+                            status = -1;
+                            isTransmissionComplete = true;
+                            RefreshReceiveUI?.Invoke(ReceivedLength, fileLength, expectedPackageNo, totalPackage, status, "接收任务被发送端取消", saveFileName, saveFileDate.ToShortDateString());
+
                         }
-                    }else if (expectedPackageNo!=0)
+                    }
+                    else if (expectedPackageNo!=0)
                     {
                         status = -1;
                         isTransmissionComplete = true;
-                        RefreshReceiveUI?.Invoke(ReceivedLength, fileLength, expectedPackageNo, totalPackage, status, "接收错误", saveFileName, saveFileDate.ToShortDateString());
+                        RefreshReceiveUI?.Invoke(ReceivedLength, fileLength, expectedPackageNo, totalPackage, status, "数据接收超时", saveFileName, saveFileDate.ToShortDateString());
                     }
                     else if (expectedPackageNo == 0)
                     {
@@ -143,6 +151,9 @@ namespace YModemWin
             SendChar(CAN);
             SendChar(CAN);
             SendChar(CAN);
+            status = -2;
+            RefreshReceiveUI?.Invoke(ReceivedLength, fileLength, expectedPackageNo, totalPackage, status, "用户取消接收", saveFileName, saveFileDate.ToShortDateString());
+
         }
 
         private int ReceivePacket()
@@ -184,6 +195,13 @@ namespace YModemWin
                     return 1;
 
                 }
+                else if (packetType == CAN)
+                {
+                    packetBuffer = new byte[1];
+                    packetBuffer[0] = packetType;
+                    return 1;
+
+                }
                 else
                 {
                     continue;
@@ -203,7 +221,7 @@ namespace YModemWin
                 if (bytesRead == 0)
                 {
                     status = -1;
-                    RefreshReceiveUI?.Invoke(ReceivedLength, fileLength, expectedPackageNo, totalPackage, status, "接收错误", saveFileName, saveFileDate.ToShortDateString());
+                    RefreshReceiveUI?.Invoke(ReceivedLength, fileLength, expectedPackageNo, totalPackage, status, "数据接收超时", saveFileName, saveFileDate.ToShortDateString());
                     return -1; // 超时或错误
                 }
                 }
@@ -339,7 +357,7 @@ namespace YModemWin
             }else
             {
                 status = -1;
-                RefreshReceiveUI?.Invoke(ReceivedLength, fileLength, expectedPackageNo, totalPackage, status, "接收错误", saveFileName, saveFileDate.ToShortDateString());
+                RefreshReceiveUI?.Invoke(ReceivedLength, fileLength, expectedPackageNo, totalPackage, status, "终止传输指令未正确响应", saveFileName, saveFileDate.ToShortDateString());
             }
         }
         private void HandleFilesAllCompeted()

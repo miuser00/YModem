@@ -71,13 +71,13 @@ namespace YModemWin
         {
             if(serialPort1.IsOpen)
             {
-                btn_port.Text = "打开";
-
                 try
                 {
                     serialPort1.Close();
+                    btn_port.Text = "打开";
+                    comboBox1.Enabled = true;
                 }
-                catch (Exception ex)
+                catch 
                 {
                     MessageBox.Show("关闭异常");
                     return;
@@ -86,7 +86,6 @@ namespace YModemWin
             }
             else
             {
-                btn_port.Text = "关闭";
                 int baud = int.Parse(cmb_baud.Text);
                 serialPort1.PortName = comboBox1.Text;
                 serialPort1.BaudRate = baud;
@@ -94,8 +93,10 @@ namespace YModemWin
                 try
                 {
                     serialPort1.Open();
+                    btn_port.Text = "关闭";
+                    comboBox1.Enabled = false;
                 }
-                catch (Exception ex)
+                catch 
                 {
                     MessageBox.Show("打开错误"); 
                     return;
@@ -113,10 +114,10 @@ namespace YModemWin
             //Console.WriteLine(test);
         }
 
-        private void btn_download_Click(object sender, EventArgs e)
+        private void btn_send_Click(object sender, EventArgs e)
         {
             if (btn_Send.Text == "取消")
-            {
+            {           
                 transmitter.StopTransmitting();
                 btn_Send.Text = "发送";
             }
@@ -174,7 +175,8 @@ namespace YModemWin
                         btn_SendStatus.Text = "";
                         break;
                     case 2:
-                        btn_SendStatus.Text = "取消";
+                        btn_Send.Text = "取消";
+                        btn_SendStatus.Text = "正在发送";
                         break;
                     case 1:
                         btn_SendStatus.Text = "成功";
@@ -185,6 +187,10 @@ namespace YModemWin
                         btn_SendStatus.Text = "错误";
                         btn_Send.Text = "发送";
                         //btn_Send.Enabled = true;
+                        break;
+                    case -2:
+                        btn_SendStatus.Text = "取消";
+                        btn_Send.Text = "发送";
                         break;
                 }
                 toolStripStatusLabel1.Text = msg;
@@ -212,7 +218,8 @@ namespace YModemWin
                         btn_ReceiveStatus.Text = "";
                         break;
                     case 2:
-                        btn_ReceiveStatus.Text = "取消";
+                        btn_Receive.Text = "取消";
+                        btn_ReceiveStatus.Text = "正在接收";
                         break;
                     case 1:
                         btn_ReceiveStatus.Text = "成功";
@@ -221,6 +228,10 @@ namespace YModemWin
                         break;
                     case -1:
                         btn_ReceiveStatus.Text = "错误";
+                        btn_Receive.Text = "接收";
+                        break;
+                    case -2:
+                        btn_ReceiveStatus.Text = "取消";
                         btn_Receive.Text = "接收";
                         break;
                 }
