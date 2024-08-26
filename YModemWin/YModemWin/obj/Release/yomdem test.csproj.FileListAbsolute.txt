@@ -1,0 +1,31 @@
+C:\2017 work\c# 代码\C# yomdem test\yomdem test\yomdem test\obj\Release\yomdem_test.Form1.resources
+C:\2017 work\c# 代码\C# yomdem test\yomdem test\yomdem test\obj\Release\yomdem_test.Properties.Resources.resources
+C:\2017 work\c# 代码\C# yomdem test\yomdem test\yomdem test\obj\Release\yomdem test.csproj.GenerateResource.Cache
+C:\2017 work\c# 代码\C# yomdem test\yomdem test\yomdem test\obj\Release\yomdem_test.About.resources
+C:\2017 work\c# 代码\C# yomdem test\yomdem test\yomdem test\bin\Release\yomdem.exe.config
+C:\2017 work\c# 代码\C# yomdem test\yomdem test\yomdem test\bin\Release\yomdem.exe
+C:\2017 work\c# 代码\C# yomdem test\yomdem test\yomdem test\bin\Release\yomdem.pdb
+C:\2017 work\c# 代码\C# yomdem test\yomdem test\yomdem test\obj\Release\yomdem.exe
+C:\2017 work\c# 代码\C# yomdem test\yomdem test\yomdem test\obj\Release\yomdem.pdb
+C:\OneDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\bin\Release\yomdem.exe.config
+C:\OneDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\bin\Release\yomdem.exe
+C:\OneDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\bin\Release\yomdem.pdb
+C:\OneDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem test.csproj.AssemblyReference.cache
+C:\OneDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem_test.About.resources
+C:\OneDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem_test.Form1.resources
+C:\OneDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem_test.Properties.Resources.resources
+C:\OneDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem test.csproj.GenerateResource.cache
+C:\OneDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem test.csproj.CoreCompileInputs.cache
+C:\OneDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem.exe
+C:\OneDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem.pdb
+C:\MyDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\bin\Release\yomdem.exe.config
+C:\MyDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\bin\Release\yomdem.exe
+C:\MyDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\bin\Release\yomdem.pdb
+C:\MyDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem test.csproj.AssemblyReference.cache
+C:\MyDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem_test.About.resources
+C:\MyDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem_test.Form1.resources
+C:\MyDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem_test.Properties.Resources.resources
+C:\MyDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem test.csproj.GenerateResource.cache
+C:\MyDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem test.csproj.CoreCompileInputs.cache
+C:\MyDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem.exe
+C:\MyDrive\project\YetAnotherPhone\ymodemdemo\resources\ymodem-bootload-csharp-master\yomdem  pcsoft\yomdem test\obj\Release\yomdem.pdb
